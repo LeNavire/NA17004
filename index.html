@@ -3,189 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcul Fck - Accès Sécurisé</title>
-    <!-- Tailwind CSS pour le style -->
+    <title>Calcul Fck - Norme NA 17004:2022</title>
+    <!-- Chargement de Tailwind CSS pour le style -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chargement de html2pdf pour la génération du PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-        }
-
-        /* Texture de fond de béton assombrie pour le portail */
-        .bg-concrete {
-            background-color: #1a1c23;
-            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
-                              url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* Ruban de signalisation de chantier */
-        .construction-tape {
-            background: repeating-linear-gradient(45deg, #eab308, #eab308 15px, #1f2937 15px, #1f2937 30px);
-        }
-
-        /* Animation de rotation pour l'icône de chargement */
-        @keyframes drill {
-            0% { transform: rotate(0deg) translateY(0); }
-            50% { transform: rotate(180deg) translateY(2px); }
-            100% { transform: rotate(360deg) translateY(0); }
-        }
-        .animate-drill {
-            animation: drill 1s linear infinite;
-        }
-
-        /* Animation de mise à jour des résultats */
-        .update-pulse {
-            animation: pop 0.4s ease-out;
-            color: #0ea5e9 !important; /* Bleu clair temporaire */
-        }
-        @keyframes pop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+        /* Quelques styles de base pour améliorer la police */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PSGZ88T8BM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<body class="min-h-screen bg-slate-50 p-4 md:p-8 text-slate-800 selection:bg-indigo-100 selection:text-indigo-900">
 
-  gtag('config', 'G-PSGZ88T8BM');
-</script>
-<body class="bg-concrete min-h-screen text-gray-100 flex items-center justify-center p-4 selection:bg-yellow-500 selection:text-black">
-
-    <!-- ==========================================
-         ÉTAPE 1 : LE FORMULAIRE D'AUTORISATION
-         ========================================== -->
-    <div id="auth-gate" class="w-full max-w-md bg-gray-900 rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden border border-gray-700 relative z-10 transition-all duration-500">
-        <div class="h-4 w-full construction-tape"></div>
-        <div class="p-8">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-800 border-2 border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)] mb-4 hover:scale-110 transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M8 6h8M8 10h8M8 14h8M8 18h8" stroke-dasharray="2 2"/>
-                    </svg>
-                </div>
-                <h1 class="text-2xl font-black text-white tracking-widest uppercase font-mono">Portail Sécurisé</h1>
-                <p class="text-yellow-500 font-semibold mt-1 text-sm tracking-widest uppercase">Section Génie Civil-Option: Carottage</p>
-                <div class="w-16 h-1 bg-gray-700 mx-auto mt-4 rounded"></div>
-            </div>
-
-            <form id="access-form" class="space-y-5">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">Matricule Opérateur</label>
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-500 group-focus-within:text-yellow-500 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <input type="text" id="matricule" required 
-                            class="block w-full pl-10 bg-gray-800 border border-gray-700 rounded-md py-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all placeholder-gray-600" 
-                            placeholder="GC-21SKIKDA">
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">Code d'Habilitation</label>
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-500 group-focus-within:text-yellow-500 transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                        </div>
-                        <input type="password" id="password" required 
-                            class="block w-full pl-10 bg-gray-800 border border-gray-700 rounded-md py-3 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all placeholder-gray-600" 
-                            placeholder="CODEALFA007">
-                    </div>
-                </div>
-
-                <div id="error-message" class="hidden text-red-400 text-sm font-bold mt-2 text-center bg-red-900/30 p-2 rounded border border-red-500/50 animate-pulse">
-                    Accès refusé : Matricule ou code incorrect.
-                </div>
-
-                <button type="submit" id="submit-btn" 
-                    class="w-full mt-6 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-3 px-4 rounded-md transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(234,179,8,0.3)] flex justify-center items-center gap-2 uppercase tracking-wider">
-                    Démarrer la session
-                </button>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- ==========================================
-         ÉTAPE 2 : L'APPLICATION Fck (Cachée par défaut)
-         ========================================== -->
-    <div id="main-content" class="hidden w-full max-w-7xl mx-auto opacity-0 transition-opacity duration-1000 my-8">
+    <div class="max-w-6xl mx-auto space-y-8">
         
-        <!-- Barre de navigation intégrée (Style Chantier/Sombre) -->
-        <nav class="bg-gray-900 border-b-4 border-yellow-500 p-4 md:px-8 rounded-t-2xl flex justify-between items-center shadow-2xl relative z-20">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center font-black text-gray-900 shadow-inner">GC</div>
-                <div>
-                    <h2 class="text-xl font-bold uppercase tracking-widest text-white hidden md:block">Plateforme <span class="text-yellow-500">CAROTTAGE </span></h2>
-                    <p class="text-xs text-gray-400 font-mono">Session Active - Outil NA 17004:2022</p>
+        <!-- En-tête -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all hover:shadow-md">
+            <div class="flex items-start md:items-center space-x-5">
+                <div class="p-4 bg-gradient-to-br from-indigo-100 to-blue-100 text-indigo-700 rounded-xl shadow-inner hidden sm:block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16.01" y1="10" y2="10"/><line x1="12" x2="12.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="14" y2="14"/><line x1="12" x2="12.01" y1="14" y2="14"/><line x1="16" x2="16.01" y1="14" y2="14"/><line x1="8" x2="8.01" y1="18" y2="18"/><line x1="12" x2="12.01" y1="18" y2="18"/><line x1="16" x2="16.01" y1="18" y2="18"/></svg>
+                </div>
+                <div class="space-y-1.5">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <label for="conventionInput" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Convention N°</label>
+                        <input type="text" id="conventionInput" class="bg-slate-100 border-transparent focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-lg px-3 py-1 text-slate-800 font-mono text-sm w-40 transition-all outline-none" value="2025.219.001" placeholder="AAAA.XXX.YYY">
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex flex-wrap items-center gap-3">
+                        Évaluation de F<sub>ck</sub> sur Site
+                        <span class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold tracking-wide shadow-sm transform -translate-y-1">Application Version Beta 1.0</span>
+                    </h1>
+                    <div class="flex flex-col sm:flex-row sm:items-center text-sm gap-2 sm:gap-4 text-slate-500">
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Norme NA 17004:2022 (Chapitre 8)
+                        </span>
+                        <span class="hidden sm:inline text-slate-300">•</span>
+                        <span class="text-indigo-600/80 font-medium">Conception : Ing. Boudeffa Khaled</span>
+                    </div>
                 </div>
             </div>
-            <button onclick="logout()" class="flex items-center gap-2 text-sm font-bold text-gray-900 bg-yellow-500 hover:bg-yellow-400 px-5 py-2.5 rounded-lg transition-all duration-300 shadow hover:shadow-[0_0_15px_rgba(234,179,8,0.5)] transform hover:-translate-y-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                Déconnexion
+            
+            <!-- Bouton Export PDF -->
+            <button onclick="generatePDF()" id="pdfBtn" class="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                <span>Générer le Rapport</span>
             </button>
-        </nav>
+        </div>
 
-        <!-- Contenu de l'application (Style Clair/Moderne selon votre code) -->
-        <main class="bg-slate-50 text-slate-800 p-6 md:p-8 rounded-b-2xl shadow-2xl">
-            <div class="max-w-6xl mx-auto space-y-8">
-                
-                <!-- En-tête de l'outil -->
-                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-slate-200 p-6 flex flex-col lg:flex-row items-center justify-between gap-6">
-                    <div class="flex items-center space-x-5">
-                        <div class="p-4 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 rounded-xl shadow-inner border border-blue-200/50">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16.01" y1="10" y2="10"/><line x1="12" x2="12.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="14" y2="14"/><line x1="12" x2="12.01" y1="14" y2="14"/><line x1="16" x2="16.01" y1="14" y2="14"/><line x1="8" x2="8.01" y1="18" y2="18"/><line x1="12" x2="12.01" y1="18" y2="18"/><line x1="16" x2="16.01" y1="18" y2="18"/></svg>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+            
+            <!-- Colonne de Gauche : Saisie des données -->
+            <div class="xl:col-span-4 space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <div class="p-2 bg-slate-100 rounded-lg text-slate-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
                         </div>
-                        <div>
-                            <div class="flex items-center space-x-3 mb-2">
-                                <label for="conventionInput" class="text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-1 rounded">Convention N°</label>
-                                <input type="text" id="conventionInput" class="bg-white border-2 border-slate-200 focus:border-blue-500 focus:ring-0 rounded-lg px-3 py-1 text-slate-800 font-mono text-sm w-40 transition-all shadow-sm" value="2025.219.001" placeholder="AAAA.XXX.YYY">
-                            </div>
-                            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Évaluation Résistance Compression (Fck)</h1>
-                            <p class="text-slate-500 font-medium">Conformément à la norme NA 17004:2022</p>
-                            <p class="mt-1"><span class="inline-block bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-100 font-semibold shadow-sm">Conception : Ing. BOUDEFFA KHALED</span></p>
-                        </div>
+                        <h2 class="text-lg font-bold text-slate-800">Saisie des Carottes</h2>
                     </div>
-                    
-                    <!-- Bouton Export PDF -->
-                    <button onclick="generatePDF()" id="pdfBtn" class="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 whitespace-nowrap w-full lg:w-auto justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                        <span>Exporter PDF (A4)</span>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
-                    <!-- Colonne de Gauche : Saisie des données -->
-                    <div class="lg:col-span-4 space-y-6">
-                        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 transition-all duration-300 hover:shadow-lg group">
-                            <div class="flex items-center space-x-3 mb-4">
-                                <div class="p-2 bg-slate-100 rounded-lg text-slate-500 group-hover:text-blue-500 group-hover:bg-blue-50 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
-                                </div>
-                                <h2 class="text-lg font-bold text-slate-800">Données (Carottes)</h2>
-                            </div>
-                            <p class="text-sm text-slate-500 mb-4 font-medium">
-                                Collez vos résultats de résistance en compression (f<sub>is</sub> en MPa), une valeur par ligne.
-                            </p>
-                            <textarea id="dataInput" class="w-full h-64 p-4 border-2 border-slate-200 rounded-xl focus:ring-0 focus:border-blue-500 font-mono text-sm shadow-inner transition-colors resize-none" placeholder="Exemple :&#10;25.51&#10;26.22&#10;24.85">25.20
+                    <p class="text-sm text-slate-500 mb-5 leading-relaxed">
+                        Collez vos résultats de résistance en compression (f<sub>is</sub> en MPa), <strong>une valeur par ligne</strong>.
+                    </p>
+                    <div class="relative">
+                        <textarea id="dataInput" class="w-full h-72 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white font-mono text-sm transition-all outline-none resize-none shadow-inner" placeholder="Exemple :&#10;25.51&#10;26.22&#10;24.85">25.20
 26.12
 24.89
 27.55
@@ -200,155 +82,177 @@
 26.54
 25.89
 24.90</textarea>
-                            <div class="mt-4 flex justify-between items-center text-sm font-bold bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                <span class="text-slate-600">Échantillons détectés :</span>
-                                <span id="badgeCount" class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-700 shadow-sm transition-colors">n = <span id="nCount">15</span></span>
-                            </div>
-                        </div>
-
-                        <!-- Paramètres d'évaluation -->
-                        <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 transition-all duration-300 hover:shadow-lg">
-                            <div class="flex items-center space-x-2 mb-5">
-                                <svg class="text-slate-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-                                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wide">Paramètres Normatifs</h2>
-                            </div>
-                            
-                            <div class="space-y-5">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Facteur de couverture (k<sub>n</sub>)</label>
-                                    <input type="number" id="knInput" step="0.01" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors font-mono" value="1.48">
-                                    <p class="text-xs text-slate-500 mt-2 font-medium">Dépend de la taille "n". Ex: 1.48 pour n ≥ 15 (Approche A) Tableau N°06.</p>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Constante M</label>
-                                    <select id="mInput" class="w-full p-3 border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-0 transition-colors font-mono bg-white cursor-pointer">
-                                        <option value="Auto" id="mAutoOption">Automatique</option>
-                                        <option value="4">M = 4</option>
-                                        <option value="3">M = 3</option>
-                                        <option value="2">M = 2</option>
-                                        <option value="1">M = 1</option>
-                                    </select>
-                                    <p class="text-xs text-slate-500 mt-2 font-medium">Par défaut, calculé selon la valeur minimale (f<sub>is, lowest</sub>).</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    <div class="mt-5 flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <span class="text-sm font-medium text-slate-600">Échantillons détectés</span>
+                        <span id="badgeCount" class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-700 font-bold text-sm shadow-sm">n = <span id="nCount">15</span></span>
+                    </div>
+                </div>
 
-                    <!-- Colonne de Droite : Résultats -->
-                    <div class="lg:col-span-8 space-y-6">
-                        
-                        <!-- Message d'erreur (masqué par défaut) -->
-                        <div id="errorContainer" class="hidden bg-red-50 border-l-4 border-red-500 p-6 rounded-xl shadow-md transform transition-all">
-                            <div class="flex items-start space-x-4">
-                                <div class="p-2 bg-red-100 rounded-full text-red-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-red-800">Données insuffisantes</h3>
-                                    <p class="text-red-700 mt-1 font-medium">La norme NA 17004 exige un minimum de 3 carottes (n ≥ 3) pour effectuer une évaluation statistique valable.</p>
-                                </div>
-                            </div>
+                <!-- Paramètres d'évaluation -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-blue-400"></div>
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="p-2 bg-slate-100 rounded-lg text-slate-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-800">Paramètres Normatifs</h2>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between">
+                                Facteur de couverture (k<sub>n</sub>)
+                                <span class="text-xs text-slate-400 font-normal">Tableau 6</span>
+                            </label>
+                            <div class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono font-semibold shadow-inner group-hover:border-slate-300 transition-colors" id="knDisplay">--</div>
                         </div>
 
-                        <!-- Conteneur des résultats -->
-                        <div id="resultsContainer" class="space-y-6 transition-all duration-500">
-                            
-                            <!-- Statistiques descriptives -->
-                            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
-                                <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                                    <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
-                                    Analyse Statistique
-                                </h2>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                        <div class="text-slate-500 text-sm mb-2 font-medium">Moyenne (f<sub>m,is</sub>)</div>
-                                        <div class="text-3xl font-black text-slate-800 result-anim" id="valFm">--</div>
-                                        <div class="text-xs text-slate-400 font-bold mt-1">MPa</div>
-                                    </div>
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                        <div class="text-slate-500 text-sm mb-2 font-medium">Minimum (f<sub>is,lowest</sub>)</div>
-                                        <div class="text-3xl font-black text-slate-800 result-anim" id="valLowest">--</div>
-                                        <div class="text-xs text-slate-400 font-bold mt-1">MPa</div>
-                                    </div>
-                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                        <div class="text-slate-500 text-sm mb-2 font-medium">Écart-type (s<sub>calc</sub>)</div>
-                                        <div class="text-3xl font-black text-slate-800 result-anim" id="valScalc">--</div>
-                                        <div class="text-xs text-slate-400 font-bold mt-1">MPa</div>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-200 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                        <div class="text-blue-700 text-sm mb-2 font-bold">Écart-type retenu (s)</div>
-                                        <div class="text-3xl font-black text-blue-800 result-anim" id="valSretained">--</div>
-                                        <div class="text-xs text-blue-600/80 font-bold mt-1">Max(s<sub>calc</sub>, 8% f<sub>m</sub>)</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Calcul des Critères et Résultats -->
-                            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
-                                <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                                    <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
-                                    Critères & Résultats
-                                </h2>
-                                
-                                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 text-base space-y-4 mb-8 shadow-inner">
-                                    <div class="flex flex-col md:flex-row md:justify-between md:items-center pb-4 border-b border-slate-200 gap-2">
-                                        <div>
-                                            <span class="text-slate-800 font-bold">Critère 1 (Moyenne pénalisée) :</span>
-                                            <p class="text-sm text-slate-500 font-mono mt-1 bg-white px-2 py-1 rounded inline-block border border-slate-100">f<sub>ck,is(1)</sub> = f<sub>m,is</sub> - (k<sub>n</sub> × s)</p>
-                                        </div>
-                                        <div class="text-xl font-black text-slate-900 bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm result-anim"><span id="crit1Result">--</span> <span class="text-sm font-bold text-slate-500">MPa</span></div>
-                                    </div>
-                                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-                                        <div>
-                                            <span class="text-slate-800 font-bold">Critère 2 (Valeur minimale majorée) :</span>
-                                            <p class="text-sm text-slate-500 font-mono mt-1 bg-white px-2 py-1 rounded inline-block border border-slate-100">f<sub>ck,is(2)</sub> = f<sub>is,lowest</sub> + M</p>
-                                        </div>
-                                        <div class="text-xl font-black text-slate-900 bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm result-anim"><span id="crit2Result">--</span> <span class="text-sm font-bold text-slate-500">MPa</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <!-- Résultat Final 1 -->
-                                    <div class="border-2 border-slate-800 rounded-2xl p-6 text-center bg-white shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
-                                        <h2 class="text-xs font-black uppercase tracking-widest text-slate-500 mb-3">Résistance sur Site (F<sub>ck,is</sub>)</h2>
-                                        <div class="text-4xl font-black text-slate-900 result-anim"><span id="finalResult">--</span> <span class="text-2xl text-slate-400">MPa</span></div>
-                                        <p class="text-xs font-bold text-slate-400 mt-4 bg-slate-100 py-1 rounded">Minimum (Critère 1, Critère 2)</p>
-                                    </div>
-
-                                    <!-- Résultat Final 2 -->
-                                    <div class="border-2 border-blue-600 rounded-2xl p-6 text-center bg-gradient-to-b from-blue-50 to-blue-100 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
-                                        <h2 class="text-xs font-black uppercase tracking-widest text-blue-800 mb-3">Résistance de Calcul (F<sub>ck</sub>)</h2>
-                                        <div class="text-4xl font-black text-blue-900 result-anim"><span id="finalResult2">--</span> <span class="text-2xl text-blue-600/60">MPa</span></div>
-                                        <p class="text-xs font-bold text-blue-600 mt-4 bg-blue-200/50 py-1 rounded">f<sub>ck</sub> = f<sub>ck,is</sub> / 0,85</p>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div class="group">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between">
+                                Constante M
+                                <span class="text-xs text-slate-400 font-normal">Tableau 7</span>
+                            </label>
+                            <div class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono font-semibold shadow-inner group-hover:border-slate-300 transition-colors" id="mDisplay">--</div>
                         </div>
-
-                        <!-- Note informative -->
-                        <div class="flex items-start space-x-4 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 text-indigo-900 rounded-xl text-sm border border-indigo-100 shadow-sm">
-                            <svg class="flex-shrink-0 mt-0.5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
-                            <p class="leading-relaxed">
-                                <strong class="font-bold text-indigo-700">Note technique (2022) :</strong> La norme introduit une limite stricte pour l'écart-type : il ne peut être inférieur à 8% de la moyenne (<code class="bg-indigo-100/80 px-1.5 py-0.5 rounded font-bold">s ≥ 0.08 × f<sub>m</sub></code>). L'approche de la valeur minimale utilise une constante <code class="bg-indigo-100/80 px-1.5 py-0.5 rounded font-bold">M</code> variable selon la résistance.
-                            </p>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </main>
+
+            <!-- Colonne de Droite : Résultats -->
+            <div class="xl:col-span-8 space-y-6">
+                
+                <!-- Message d'erreur (masqué par défaut) -->
+                <div id="errorContainer" class="hidden bg-rose-50 border border-rose-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
+                    <div class="flex items-start space-x-4">
+                        <div class="p-2 bg-rose-100 rounded-full text-rose-600 mt-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-rose-800">Données insuffisantes</h3>
+                            <p class="text-rose-600 mt-1.5 leading-relaxed">La norme NA 17004 exige un minimum de <strong>3 carottes (n ≥ 3)</strong> pour effectuer une évaluation statistique valable. Veuillez ajouter plus de résultats.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteneur des résultats (visible par défaut) -->
+                <div id="resultsContainer" class="space-y-6">
+                    
+                    <!-- Statistiques descriptives -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">1</span>
+                            Analyse Statistique
+                        </h2>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
+                                <div class="text-slate-500 text-sm font-medium mb-1">Moyenne (f<sub>m,is</sub>)</div>
+                                <div class="flex items-baseline gap-1">
+                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valFm">--</div>
+                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
+                                <div class="text-slate-500 text-sm font-medium mb-1">Minimum (f<sub>is,low</sub>)</div>
+                                <div class="flex items-baseline gap-1">
+                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valLowest">--</div>
+                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
+                                <div class="text-slate-500 text-sm font-medium mb-1">Écart-type (s<sub>calc</sub>)</div>
+                                <div class="flex items-baseline gap-1">
+                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valScalc">--</div>
+                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
+                                </div>
+                            </div>
+                            <div class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 hover:shadow-md transition-shadow relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-16 h-16 bg-indigo-100 rounded-bl-full -mr-8 -mt-8 opacity-50"></div>
+                                <div class="text-indigo-700 text-sm font-bold mb-1 relative z-10">Écart-type retenu (s)</div>
+                                <div class="flex items-baseline gap-1 relative z-10">
+                                    <div class="text-3xl font-extrabold text-indigo-900 tracking-tight" id="valSretained">--</div>
+                                    <div class="text-sm font-semibold text-indigo-500">MPa</div>
+                                </div>
+                                <div class="text-xs font-medium text-indigo-600/70 mt-2 relative z-10 bg-indigo-100/50 inline-block px-2 py-0.5 rounded">Max(s<sub>calc</sub>, 8% f<sub>m</sub>)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calcul des Critères et Résultats -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">2</span>
+                            Critères & Résultats Finaux
+                        </h2>
+                        
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/60 text-base space-y-3 mb-8 shadow-inner">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-slate-700 font-semibold text-sm">Critère 1 (Moyenne pénalisée)</span>
+                                    <p class="text-xs text-slate-500 font-mono mt-0.5">f<sub>ck,is(1)</sub> = f<sub>m,is</sub> - (k<sub>n</sub> × s)</p>
+                                </div>
+                                <div class="font-black text-lg text-slate-800 bg-white px-4 py-1.5 rounded-lg border border-slate-200 shadow-sm"><span id="crit1Result">--</span> <span class="text-sm font-semibold text-slate-400">MPa</span></div>
+                            </div>
+                            <div class="h-px w-full bg-slate-200/60"></div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                                <div>
+                                    <span class="text-slate-700 font-semibold text-sm">Critère 2 (Valeur minimale majorée)</span>
+                                    <p class="text-xs text-slate-500 font-mono mt-0.5">f<sub>ck,is(2)</sub> = f<sub>is,lowest</sub> + M</p>
+                                </div>
+                                <div class="font-black text-lg text-slate-800 bg-white px-4 py-1.5 rounded-lg border border-slate-200 shadow-sm"><span id="crit2Result">--</span> <span class="text-sm font-semibold text-slate-400">MPa</span></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Résultat Final 1 -->
+                            <div class="relative overflow-hidden border-2 border-emerald-500 rounded-2xl p-6 text-center bg-gradient-to-b from-white to-emerald-50/30 shadow-md transition-transform hover:-translate-y-1">
+                                <div class="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                                <h2 class="text-xs font-black uppercase tracking-widest text-emerald-700 mb-3">Résistance sur Site (F<sub>ck,is</sub>)</h2>
+                                <div class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight my-2">
+                                    <span id="finalResult">--</span> <span class="text-2xl text-emerald-600 ml-1">MPa</span>
+                                </div>
+                                <div class="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mt-3">
+                                    Min(Critère 1, Critère 2)
+                                </div>
+                            </div>
+
+                            <!-- Résultat Final 2 -->
+                            <div class="relative overflow-hidden border-2 border-indigo-600 rounded-2xl p-6 text-center bg-gradient-to-b from-indigo-600 to-blue-700 shadow-lg transition-transform hover:-translate-y-1">
+                                <h2 class="text-xs font-black uppercase tracking-widest text-indigo-100 mb-3 opacity-90">Résistance de Calcul (F<sub>ck</sub>)</h2>
+                                <div class="text-4xl md:text-5xl font-black text-white tracking-tight my-2 drop-shadow-md">
+                                    <span id="finalResult2">--</span> <span class="text-2xl text-indigo-200 ml-1">MPa</span>
+                                </div>
+                                <div class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full mt-3 border border-white/10">
+                                    f<sub>ck</sub> = f<sub>ck,is</sub> ÷ 0.85
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Note informative -->
+                <div class="flex items-start space-x-4 p-5 bg-blue-50/80 text-blue-900 rounded-2xl text-sm border border-blue-100 shadow-sm">
+                    <div class="p-1.5 bg-blue-100 rounded-lg text-blue-600 flex-shrink-0 mt-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
+                    </div>
+                    <p class="leading-relaxed">
+                        <strong class="font-bold text-blue-800 block mb-1">Rappel Normatif :</strong> La version 2022 a introduit une limite stricte pour l'écart-type utilisé dans les calculs : il ne peut pas être inférieur à 8% de la moyenne (<code class="bg-blue-200/50 text-blue-800 px-1.5 py-0.5 rounded font-bold">s ≥ 0.08 × f<sub>m</sub></code>). L'approche de la valeur minimale (Critère 2) utilise désormais une constante <code class="bg-blue-200/50 text-blue-800 px-1.5 py-0.5 rounded font-bold">M</code> variable selon le niveau de résistance atteint (Tableau 7).
+                    </p>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <!-- ==========================================
-         TEMPLATE INVISIBLE POUR L'EXPORT PDF
-         ========================================== -->
+    <!-- Template invisible utilisé pour générer le PDF -->
     <div style="position: absolute; left: -9999px; top: 0;">
+        <!-- Largeur ajustée à 600px pour une proportion idéale sur format A4 -->
+        
         <div id="pdfTemplate" class="w-[700px] bg-white pt-[20px] px-10 pb-10 text-slate-900 font-sans">
-            <div style="width:100%; text-align:center; border-bottom:2px solid #0f172a; padding-bottom:6px; margin-bottom:20px; font-size:15px; font-weight:bold; letter-spacing:0.5px;">
-                Évaluation de la Résistance Caractéristique sur Site (Fck) Conformément à la norme NA 17004:2022 
-            </div>
+            <!-- Header -->
+
             <div class="border-b-4 border-slate-900 pb-4 mb-6 flex justify-between items-end">
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">Rapport d'Évaluation F<sub>ck</sub></h1>
@@ -367,6 +271,7 @@
 
             <div class="mb-6">
                 <h2 class="text-sm font-bold border-b-1 border-slate-300 pb-1 mb-2">1. Données mesurées (MPa)</h2>
+                <!-- Grille dynamique pour les valeurs des carottes (8 colonnes) -->
                 <div id="pdfCoresGrid" class="grid grid-cols-8 gap-2 text-sm font-mono text-center"></div>
             </div>
 
@@ -387,6 +292,7 @@
 
             <div class="mb-8">
                 <h2 class="text-sm font-bold border-b-2 border-slate-300 pb-2 mb-4">3. Critères d'évaluation</h2>
+                
                 <div class="bg-white p-4 rounded-lg border border-slate-200 text-xs space-y-2 mb-6 shadow-sm">
                     <div class="flex justify-between items-center">
                         <span class="text-slate-900">Critère 1 (Moyenne pénalisée) :</span>
@@ -397,117 +303,60 @@
                         <span class="font-bold text-slate-900"><span id="pdfC2"></span> MPa</span>
                     </div>
                 </div>
+
+               
                 <div class="flex gap-4">
-                    <div class="w-1/2 border border-slate-600 rounded-xl p-6 text-center bg-white shadow-sm">
-                        <h2 class="text-sm font-bold uppercase tracking-widest text-slate-600 mb-2">Résistance sur Site (F<sub>ck,is</sub>)</h2>
-                        <div class="text-2xl font-extrabold text-slate-900"><span id="pdfFinal"></span> <span class="text-2xl font-bold">MPa</span></div>
-                        <p class="text-xs text-slate-500 mt-3">Minimum(Critère 1, Critère 2)</p>
-                    </div>
-                    <div class="w-1/2 border border-blue-600 rounded-xl p-6 text-center bg-blue-50 shadow-sm">
-                        <h2 class="text-sm font-bold uppercase tracking-widest text-blue-800 mb-2">Résistance de Calcul (F<sub>ck</sub>)</h2>
-                        <div class="text-2xl font-extrabold text-blue-900"><span id="pdfFinal2"></span> <span class="text-2xl font-bold">MPa</span></div>
-                        <p class="text-xs text-blue-600 mt-3">f<sub>ck</sub> = f<sub>ck,is</sub> / 0,85</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Résultat Final 1 (PDF) -->
+    <div class="w-1/2 border border-slate-600 rounded-xl p-6 text-center bg-white shadow-sm">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-slate-600 mb-2">
+            Résistance Caractéristique sur Site (F<sub>ck,is</sub>)
+        </h2>
+        <div class="text-2xl font-extrabold text-slate-900">
+            <span id="pdfFinal"></span> <span class="text-2xl font-bold">MPa</span>
         </div>
+        <p class="text-xs text-slate-500 mt-3">
+            Valeur retenue : Minimum(Critère 1, Critère 2)
+        </p>
+    </div>
+
+    <!-- Résultat Final 2 (PDF) -->
+    <div class="w-1/2 border border-blue-600 rounded-xl p-6 text-center bg-blue-50 shadow-sm">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-blue-800 mb-2">
+            Résistance Caractéristique de Calcul (F<sub>ck</sub>)
+        </h2>
+        <div class="text-2xl font-extrabold text-blue-900">
+            <span id="pdfFinal2"></span> <span class="text-2xl font-bold">MPa</span>
+        </div>
+        <p class="text-xs text-blue-600 mt-3">
+            f<sub>ck</sub> = f<sub>ck,is</sub> / 0,85
+        </p>
+    </div>
+
+    
+</div>
+
+            </div>
+
+        </div>
+
     </div>
 
 
-    <!-- ==========================================
-         SCRIPTS D'INTERACTION ET LOGIQUE
-         ========================================== -->
-    <script>
-        // --- 1. LOGIQUE D'AUTHENTIFICATION ---
-        document.getElementById('access-form').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const btn = document.getElementById('submit-btn');
-            const originalContent = btn.innerHTML;
-            const matricule = document.getElementById('matricule').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
-            
-            errorMessage.classList.add('hidden');
-            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Vérification...`;
-            btn.disabled = true;
-            btn.classList.add('opacity-80', 'cursor-not-allowed');
-
-            setTimeout(() => {
-                // Vérification stricte
-                if (matricule === 'GC-21SKIKDA' && password === 'CODEALFA007') {
-                    const authGate = document.getElementById('auth-gate');
-                    authGate.classList.add('scale-95', 'opacity-0');
-                    
-                    setTimeout(() => {
-                        authGate.classList.add('hidden');
-                        const mainContent = document.getElementById('main-content');
-                        mainContent.classList.remove('hidden');
-                        
-                        // Lancer le calcul au chargement de l'outil
-                        calculate();
-
-                        setTimeout(() => {
-                            mainContent.classList.remove('opacity-0');
-                            document.body.classList.remove('flex', 'items-center'); // Permet de scroller correctement
-                        }, 50);
-                    }, 500); 
-                } else {
-                    btn.innerHTML = originalContent;
-                    btn.disabled = false;
-                    btn.classList.remove('opacity-80', 'cursor-not-allowed');
-                    errorMessage.classList.remove('hidden');
-                }
-            }, 1000);
-        });
-
-        // Fonction de déconnexion
-        function logout() {
-            const mainContent = document.getElementById('main-content');
-            const authGate = document.getElementById('auth-gate');
-            const btn = document.getElementById('submit-btn');
-            
-            mainContent.classList.add('opacity-0');
-            
-            setTimeout(() => {
-                mainContent.classList.add('hidden');
-                document.body.classList.add('flex', 'items-center'); // Retour au centrage
-                
-                document.getElementById('access-form').reset();
-                btn.innerHTML = 'Démarrer la session';
-                btn.disabled = false;
-                btn.classList.remove('opacity-80', 'cursor-not-allowed');
-                
-                authGate.classList.remove('hidden');
-                setTimeout(() => {
-                    authGate.classList.remove('scale-95', 'opacity-0');
-                }, 50);
-            }, 500);
-        }
-
-        // --- 2. LOGIQUE DE CALCUL FCK ---
-        function triggerAnimation() {
-            // Ajoute une petite animation sur les résultats quand on modifie les données
-            const elements = document.querySelectorAll('.result-anim');
-            elements.forEach(el => {
-                el.classList.remove('update-pulse');
-                void el.offsetWidth; // Déclenche un reflow
-                el.classList.add('update-pulse');
-            });
-        }
-
+        <script>
+        // Mettre à jour les calculs à chaque changement
         function calculate() {
             const dataText = document.getElementById('dataInput').value;
-            const knInput = parseFloat(document.getElementById('knInput').value) || 0;
-            const mInput = document.getElementById('mInput').value;
 
+            // 1. Extraire les nombres du champ texte
             const lines = dataText.split('\n');
             const cores = [];
             for (const line of lines) {
                 const cleanLine = line.trim().replace(',', '.');
                 if (cleanLine !== '') {
                     const num = parseFloat(cleanLine);
-                    if (!isNaN(num)) cores.push(num);
+                    if (!isNaN(num)) {
+                        cores.push(num);
+                    }
                 }
             }
 
@@ -519,77 +368,113 @@
             const badgeCount = document.getElementById('badgeCount');
             const pdfBtn = document.getElementById('pdfBtn');
 
+            // 2. Vérifier si on a au moins 3 valeurs
             if (n < 3) {
-                resultsContainer.classList.add('hidden', 'opacity-0');
+                resultsContainer.classList.add('hidden');
                 errorContainer.classList.remove('hidden');
-                badgeCount.className = 'px-3 py-1 rounded-md bg-red-100 text-red-700 shadow-sm transition-colors font-bold';
+                badgeCount.className = 'px-2 py-1 rounded-md bg-red-100 text-red-700';
                 pdfBtn.disabled = true;
                 pdfBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 return;
             }
 
+            // Afficher les résultats
             resultsContainer.classList.remove('hidden');
-            setTimeout(() => resultsContainer.classList.remove('opacity-0'), 10);
             errorContainer.classList.add('hidden');
-            badgeCount.className = 'px-3 py-1 rounded-md bg-emerald-100 text-emerald-700 shadow-sm transition-colors font-bold';
+            badgeCount.className = 'px-2 py-1 rounded-md bg-emerald-100 text-emerald-700';
             pdfBtn.disabled = false;
             pdfBtn.classList.remove('opacity-50', 'cursor-not-allowed');
 
+            // 3. Calculs Statistiques
             const fm = cores.reduce((a, b) => a + b, 0) / n;
             const f_lowest = Math.min(...cores);
 
             let variance = 0;
-            for (const val of cores) variance += Math.pow(val - fm, 2);
+            for (const val of cores) {
+                variance += Math.pow(val - fm, 2);
+            }
             variance = variance / (n - 1);
             const s_calc = Math.sqrt(variance);
 
             const s_min = 0.08 * fm;
             const s_retained = Math.max(s_calc, s_min);
 
-            let m_auto = 1;
-            if (f_lowest >= 20) m_auto = 4;
-            else if (f_lowest >= 16) m_auto = 3;
-            else if (f_lowest >= 12) m_auto = 2;
+            // 4. Règles normatives M et kn (Tableaux 6 et 7)
+            let kn = 2.00;
+            if (n <= 8) kn = 2.00;
+            else if (n <= 10) kn = 2.00 - (n - 8) * ((2.00 - 1.92) / 2);
+            else if (n <= 12) kn = 1.92 - (n - 10) * ((1.92 - 1.87) / 2);
+            else if (n <= 16) kn = 1.87 - (n - 12) * ((1.87 - 1.81) / 4);
+            else if (n <= 20) kn = 1.81 - (n - 16) * ((1.81 - 1.76) / 4);
+            else if (n <= 30) kn = 1.76 - (n - 20) * ((1.76 - 1.73) / 10);
+            else kn = 1.64; // Pour n > 30 (infini)
+            
+            kn = Math.round(kn * 100) / 100;
 
-            document.getElementById('mAutoOption').textContent = `Automatique (${m_auto})`;
-            const M = mInput === "Auto" ? m_auto : parseFloat(mInput);
+            let M = 1;
+            let mConditionHtml = "";
+            if (f_lowest >= 20) { 
+                M = 4; 
+                mConditionHtml = `(f<sub>is,lowest</sub> &ge; 20 MPa)`; 
+            }
+            else if (f_lowest >= 16) { 
+                M = 3; 
+                mConditionHtml = `(16 &le; f<sub>is,lowest</sub> &lt; 20 MPa)`; 
+            }
+            else if (f_lowest >= 12) { 
+                M = 2; 
+                mConditionHtml = `(12 &le; f<sub>is,lowest</sub> &lt; 16 MPa)`; 
+            }
+            else { 
+                M = 1; 
+                mConditionHtml = `(f<sub>is,lowest</sub> &lt; 12 MPa)`; 
+            }
 
-            const fck_is_1 = fm - knInput * s_retained;
+            // 5. Critères de Résistance
+            const fck_is_1 = fm - kn * s_retained;
             const fck_is_2 = f_lowest + M;
             const fck_is = Math.min(fck_is_1, fck_is_2);
+
+            // 6. Nouveau calcul pour la résistance de calcul (fck)
             const fck = fck_is / 0.85;
 
+            // 7. Mise à jour de l'interface
             document.getElementById('valFm').textContent = fm.toFixed(2);
             document.getElementById('valLowest').textContent = f_lowest.toFixed(2);
             document.getElementById('valScalc').textContent = s_calc.toFixed(3);
             document.getElementById('valSretained').textContent = s_retained.toFixed(3);
+
+            document.getElementById('knDisplay').innerHTML = `${kn.toFixed(2)} <span class="text-slate-500 text-sm font-normal ml-1">(n = ${n})</span>`;
+            document.getElementById('mDisplay').innerHTML = `${M} <span class="text-slate-500 text-sm font-normal ml-1">${mConditionHtml}</span>`;
 
             document.getElementById('crit1Result').textContent = fck_is_1.toFixed(2);
             document.getElementById('crit2Result').textContent = fck_is_2.toFixed(2);
 
             document.getElementById('finalResult').textContent = fck_is.toFixed(2);
             document.getElementById('finalResult2').textContent = fck.toFixed(2);
-            
-            triggerAnimation();
         }
 
-        // --- 3. GÉNÉRATION PDF ---
+        // Fonction pour générer le PDF
         function generatePDF() {
+            // Modification du bouton pour indiquer le chargement
             const btn = document.getElementById('pdfBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Génération...`;
             
+            // 1. Remplir le template PDF avec les données actuelles
             const dateStr = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
             document.getElementById('pdfDate').textContent = dateStr;
             document.getElementById('pdfN').textContent = document.getElementById('nCount').textContent;
             document.getElementById('pdfConvention').textContent = document.getElementById('conventionInput').value || 'Non renseigné';
             
+            // Récupération des données brutes
             const dataText = document.getElementById('dataInput').value;
             const cores = dataText.split('\n')
                                   .map(l => l.trim().replace(',', '.'))
                                   .filter(l => l !== '' && !isNaN(parseFloat(l)))
                                   .map(l => parseFloat(l).toFixed(2));
             
+            // Remplir la grille
             const grid = document.getElementById('pdfCoresGrid');
             grid.innerHTML = '';
             cores.forEach(val => {
@@ -599,44 +484,45 @@
                 grid.appendChild(div);
             });
 
+            // Remplir les paramètres et résultats
             document.getElementById('pdfFm').textContent = document.getElementById('valFm').textContent;
             document.getElementById('pdfLowest').textContent = document.getElementById('valLowest').textContent;
             document.getElementById('pdfS').textContent = document.getElementById('valSretained').textContent;
-            document.getElementById('pdfKn').textContent = document.getElementById('knInput').value;
             
-            const mVal = document.getElementById('mInput').value;
-            if(mVal === 'Auto') {
-                const autoText = document.getElementById('mAutoOption').textContent;
-                document.getElementById('pdfM').textContent = autoText.match(/\d+/)[0] + " (Auto)";
-            } else {
-                document.getElementById('pdfM').textContent = mVal;
-            }
+            document.getElementById('pdfKn').innerHTML = document.getElementById('knDisplay').innerHTML;
+            document.getElementById('pdfM').innerHTML = document.getElementById('mDisplay').innerHTML;
 
             document.getElementById('pdfC1').textContent = document.getElementById('crit1Result').textContent;
             document.getElementById('pdfC2').textContent = document.getElementById('crit2Result').textContent;
+            
             document.getElementById('pdfFinal').textContent = document.getElementById('finalResult').textContent;
             document.getElementById('pdfFinal2').textContent = document.getElementById('finalResult2').textContent;
 
-            let conventionInput = document.getElementById("conventionInput").value.replace(/[^\w\-]/g, "");
+            // 2. Configuration html2pdf
+           let conventionInput = document.getElementById("conventionInput").value;
+conventionInput = conventionInput.replace(/[^\w\-]/g, "");
             const element = document.getElementById('pdfTemplate');
             
             const opt = {
-                margin:       10,
+                margin:       10, // marges en mm
                 filename:     `Fck_Rapport_${conventionInput}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Format A4
             };
 
+            // 3. Lancer la génération
             html2pdf().set(opt).from(element).save().then(() => {
+                // Restaurer le bouton
                 btn.innerHTML = originalText;
             });
         }
 
-        // Écouteurs pour le calcul dynamique
+        // Ajouter les écouteurs d'événements pour rendre l'interface réactive
         document.getElementById('dataInput').addEventListener('input', calculate);
-        document.getElementById('knInput').addEventListener('input', calculate);
-        document.getElementById('mInput').addEventListener('change', calculate);
+
+        // Lancer le calcul initial au chargement de la page
+        document.addEventListener('DOMContentLoaded', calculate);
     </script>
 </body>
 </html>
