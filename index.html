@@ -1,82 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcul Fck - Norme NA 17004:2022</title>
-    <!-- Chargement de Tailwind CSS pour le style -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calcul Fck - Norme NA 17004:2022 | V2.0</title>
+
+    <!-- STREAMING_CHUNK: Loading External Libraries (Tailwind, KaTeX, html2pdf, Fonts) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chargement de html2pdf pour la génération du PDF -->
+
+    <!-- html2pdf pour la génération du PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- KaTeX pour le rendu mathématique professionnel -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    ></script>
+
+    <!-- Google Fonts: Inter (UI), Crimson Pro (Math/Text), Fira Code (Data) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        /* Quelques styles de base pour améliorer la police */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+      /* STREAMING_CHUNK: Base Styles & Typography Setup */
+      :root {
+        --font-ui: "Inter", sans-serif;
+        --font-math: "Crimson Pro", serif;
+        --font-mono: "Fira Code", monospace;
+      }
+
+      body {
+        font-family: var(--font-ui);
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+
+      .math-text {
+        font-family: var(--font-math);
+      }
+      .data-text {
+        font-family: var(--font-mono);
+      }
+
+      /* Custom Scrollbar for Textarea */
+      textarea::-webkit-scrollbar {
+        width: 8px;
+      }
+      textarea::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+      }
+      textarea::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      textarea::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      /* Scientific Card Style */
+      .sci-card {
+        background: white;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      }
+
+      /* PDF Specific Reset */
+      #pdfTemplate {
+        font-family: var(--font-math);
+      }
+      #pdfTemplate .data-text {
+        font-family: var(--font-mono);
+      }
+      .pdf-table-row {
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .pdf-table-row:last-child {
+        border-bottom: none;
+      }
     </style>
-</head>
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PSGZ88T8BM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  </head>
 
-  gtag('config', 'G-PSGZ88T8BM');
-</script>
-<body class="min-h-screen bg-slate-50 p-4 md:p-8 text-slate-800 selection:bg-indigo-100 selection:text-indigo-900">
-
-    <div class="max-w-6xl mx-auto space-y-8">
-        
-        <!-- En-tête -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all hover:shadow-md">
-            <div class="flex items-start md:items-center space-x-5">
-                <div class="p-4 bg-gradient-to-br from-indigo-100 to-blue-100 text-indigo-700 rounded-xl shadow-inner hidden sm:block">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16.01" y1="10" y2="10"/><line x1="12" x2="12.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="14" y2="14"/><line x1="12" x2="12.01" y1="14" y2="14"/><line x1="16" x2="16.01" y1="14" y2="14"/><line x1="8" x2="8.01" y1="18" y2="18"/><line x1="12" x2="12.01" y1="18" y2="18"/><line x1="16" x2="16.01" y1="18" y2="18"/></svg>
-                </div>
-                <div class="space-y-1.5">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <label for="conventionInput" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Convention N°</label>
-                        <input type="text" id="conventionInput" class="bg-slate-100 border-transparent focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-lg px-3 py-1 text-slate-800 font-mono text-sm w-40 transition-all outline-none" value="2025.219.001" placeholder="AAAA.XXX.YYY">
-                    </div>
-                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex flex-wrap items-center gap-3">
-                        Évaluation de F<sub>ck</sub> sur Site
-                        <span class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold tracking-wide shadow-sm transform -translate-y-1">Application Version Beta 1.0</span>
-                    </h1>
-                    <div class="flex flex-col sm:flex-row sm:items-center text-sm gap-2 sm:gap-4 text-slate-500">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Norme NA 17004:2022 (Chapitre 8)
-                        </span>
-                        <span class="hidden sm:inline text-slate-300">•</span>
-                        <span class="text-indigo-600/80 font-medium">Conception : Ing. Boudeffa Khaled</span>
-                    </div>
-                </div>
+  <body class="min-h-screen py-8 px-4 md:px-8">
+    <!-- STREAMING_CHUNK: Main Application Container & Header -->
+    <div class="max-w-6xl mx-auto space-y-6">
+      <!-- Header Section -->
+      <header
+        class="sci-card p-6 md:p-8 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 border-t-4 border-t-slate-800"
+      >
+        <div class="space-y-3 w-full">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex items-center gap-3">
+              <span
+                class="px-2 py-1 bg-slate-800 text-slate-50 text-xs font-bold tracking-widest uppercase rounded-sm"
+                >Révision 2.0</span
+              >
+              <span class="text-sm font-medium text-slate-500 math-text italic"
+                >Ing. Boudeffa Khaled</span
+              >
             </div>
-            
-            <!-- Bouton Export PDF -->
-            <button onclick="generatePDF()" id="pdfBtn" class="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap active:scale-95">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                <span>Générer le Rapport</span>
-            </button>
+          </div>
+
+          <h1
+            class="text-3xl md:text-4xl font-bold text-slate-900 math-text tracking-tight"
+          >
+            Évaluation Statistique de \( f_{ck} \) sur Site
+          </h1>
+
+          <div
+            class="flex flex-col sm:flex-row gap-4 text-sm text-slate-600 border-t border-slate-200 pt-4 mt-2"
+          >
+            <div class="flex items-center gap-2">
+              <svg
+                class="w-4 h-4 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span class="font-medium">Norme NA 17004:2022 (Chapitre 8)</span>
+            </div>
+            <div class="hidden sm:block text-slate-300">|</div>
+            <div class="flex items-center gap-2">
+              <label for="conventionInput" class="font-semibold text-slate-700"
+                >Réf. Convention :</label
+              >
+              <input
+                type="text"
+                id="conventionInput"
+                class="bg-slate-50 border border-slate-300 focus:border-slate-600 focus:ring-0 rounded-sm px-2 py-0.5 data-text text-sm w-40 transition-colors outline-none"
+                value="2025.219.001"
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-            
-            <!-- Colonne de Gauche : Saisie des données -->
-            <div class="xl:col-span-4 space-y-6">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-                    <div class="flex items-center space-x-2 mb-3">
-                        <div class="p-2 bg-slate-100 rounded-lg text-slate-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
-                        </div>
-                        <h2 class="text-lg font-bold text-slate-800">Saisie des Carottes</h2>
-                    </div>
-                    <p class="text-sm text-slate-500 mb-5 leading-relaxed">
-                        Collez vos résultats de résistance en compression (f<sub>is</sub> en MPa), <strong>une valeur par ligne</strong>.
-                    </p>
-                    <div class="relative">
-                        <textarea id="dataInput" class="w-full h-72 p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white font-mono text-sm transition-all outline-none resize-none shadow-inner" placeholder="Exemple :&#10;25.51&#10;26.22&#10;24.85">25.20
+        <button
+          onclick="generatePDF()"
+          id="pdfBtn"
+          class="flex items-center justify-center space-x-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-sm font-medium transition-colors whitespace-nowrap w-full md:w-auto shadow-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" x2="12" y1="15" y2="3" />
+          </svg>
+          <span>Éditer le Rapport</span>
+        </button>
+      </header>
+
+      <!-- STREAMING_CHUNK: Layout Grid (Input vs Results) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Column: Data Input -->
+        <div class="lg:col-span-4 space-y-6">
+          <div class="sci-card p-6">
+            <h2
+              class="text-lg font-bold text-slate-800 math-text mb-2 border-b border-slate-200 pb-2"
+            >
+              1. Données d'entrée (\( f_{is} \))
+            </h2>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+              Saisissez les résistances en compression des carottes (MPa), une
+              valeur par ligne.
+            </p>
+
+            <textarea
+              id="dataInput"
+              class="w-full h-80 p-3 bg-slate-50 border border-slate-300 rounded-sm focus:border-slate-600 focus:bg-white data-text text-sm transition-colors outline-none resize-none"
+              placeholder="25.51&#10;26.22&#10;24.85"
+            >
+25.20
 26.12
 24.89
 27.55
@@ -90,448 +213,666 @@
 24.13
 26.54
 25.89
-24.90</textarea>
-                    </div>
-                    <div class="mt-5 flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <span class="text-sm font-medium text-slate-600">Échantillons détectés</span>
-                        <span id="badgeCount" class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-700 font-bold text-sm shadow-sm">n = <span id="nCount">15</span></span>
-                    </div>
-                </div>
+24.90</textarea
+            >
 
-                <!-- Paramètres d'évaluation -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-blue-400"></div>
-                    <div class="flex items-center space-x-2 mb-5">
-                        <div class="p-2 bg-slate-100 rounded-lg text-slate-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
-                        </div>
-                        <h2 class="text-lg font-bold text-slate-800">Paramètres Normatifs</h2>
-                    </div>
-                    
-                    <div class="space-y-5">
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between">
-                                Facteur de couverture (k<sub>n</sub>)
-                                <span class="text-xs text-slate-400 font-normal">Tableau 6</span>
-                            </label>
-                            <div class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono font-semibold shadow-inner group-hover:border-slate-300 transition-colors" id="knDisplay">--</div>
-                        </div>
-
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between">
-                                Constante M
-                                <span class="text-xs text-slate-400 font-normal">Tableau 7</span>
-                            </label>
-                            <div class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono font-semibold shadow-inner group-hover:border-slate-300 transition-colors" id="mDisplay">--</div>
-                        </div>
-                    </div>
-                </div>
+            <div
+              class="mt-4 flex justify-between items-center bg-slate-100 p-2.5 rounded-sm border border-slate-200"
+            >
+              <span
+                class="text-xs font-semibold text-slate-600 uppercase tracking-wide"
+                >Taille d'échantillon</span
+              >
+              <span
+                id="badgeCount"
+                class="px-2 py-0.5 rounded-sm bg-slate-800 text-white data-text font-bold text-sm"
+                >\( n = \) <span id="nCount">15</span></span
+              >
             </div>
+          </div>
 
-            <!-- Colonne de Droite : Résultats -->
-            <div class="xl:col-span-8 space-y-6">
-                
-                <!-- Message d'erreur (masqué par défaut) -->
-                <div id="errorContainer" class="hidden bg-rose-50 border border-rose-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
-                    <div class="flex items-start space-x-4">
-                        <div class="p-2 bg-rose-100 rounded-full text-rose-600 mt-0.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-rose-800">Données insuffisantes</h3>
-                            <p class="text-rose-600 mt-1.5 leading-relaxed">La norme NA 17004 exige un minimum de <strong>3 carottes (n ≥ 3)</strong> pour effectuer une évaluation statistique valable. Veuillez ajouter plus de résultats.</p>
-                        </div>
-                    </div>
+          <!-- Parameters Box -->
+          <div class="sci-card p-6 bg-slate-50">
+            <h2
+              class="text-lg font-bold text-slate-800 math-text mb-4 border-b border-slate-200 pb-2"
+            >
+              2. Paramètres Normatifs
+            </h2>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm font-medium text-slate-700"
+                  >Facteur \( k_n \)
+                  <span class="text-xs text-slate-400 font-normal"
+                    >(Tab. 6)</span
+                  ></span
+                >
+                <div
+                  class="data-text font-bold text-slate-900 bg-white px-3 py-1 border border-slate-300 rounded-sm"
+                  id="knDisplay"
+                >
+                  --
                 </div>
-
-                <!-- Conteneur des résultats (visible par défaut) -->
-                <div id="resultsContainer" class="space-y-6">
-                    
-                    <!-- Statistiques descriptives -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
-                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                            <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">1</span>
-                            Analyse Statistique
-                        </h2>
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
-                                <div class="text-slate-500 text-sm font-medium mb-1">Moyenne (f<sub>m,is</sub>)</div>
-                                <div class="flex items-baseline gap-1">
-                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valFm">--</div>
-                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
-                                </div>
-                            </div>
-                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
-                                <div class="text-slate-500 text-sm font-medium mb-1">Minimum (f<sub>is,low</sub>)</div>
-                                <div class="flex items-baseline gap-1">
-                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valLowest">--</div>
-                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
-                                </div>
-                            </div>
-                            <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 hover:shadow-md transition-shadow">
-                                <div class="text-slate-500 text-sm font-medium mb-1">Écart-type (s<sub>calc</sub>)</div>
-                                <div class="flex items-baseline gap-1">
-                                    <div class="text-3xl font-extrabold text-slate-800 tracking-tight" id="valScalc">--</div>
-                                    <div class="text-sm font-semibold text-slate-400">MPa</div>
-                                </div>
-                            </div>
-                            <div class="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 hover:shadow-md transition-shadow relative overflow-hidden">
-                                <div class="absolute top-0 right-0 w-16 h-16 bg-indigo-100 rounded-bl-full -mr-8 -mt-8 opacity-50"></div>
-                                <div class="text-indigo-700 text-sm font-bold mb-1 relative z-10">Écart-type retenu (s)</div>
-                                <div class="flex items-baseline gap-1 relative z-10">
-                                    <div class="text-3xl font-extrabold text-indigo-900 tracking-tight" id="valSretained">--</div>
-                                    <div class="text-sm font-semibold text-indigo-500">MPa</div>
-                                </div>
-                                <div class="text-xs font-medium text-indigo-600/70 mt-2 relative z-10 bg-indigo-100/50 inline-block px-2 py-0.5 rounded">Max(s<sub>calc</sub>, 8% f<sub>m</sub>)</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Calcul des Critères et Résultats -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
-                        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">2</span>
-                            Critères & Résultats Finaux
-                        </h2>
-                        
-                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/60 text-base space-y-3 mb-8 shadow-inner">
-                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                                <div>
-                                    <span class="text-slate-700 font-semibold text-sm">Critère 1 (Moyenne pénalisée)</span>
-                                    <p class="text-xs text-slate-500 font-mono mt-0.5">f<sub>ck,is(1)</sub> = f<sub>m,is</sub> - (k<sub>n</sub> × s)</p>
-                                </div>
-                                <div class="font-black text-lg text-slate-800 bg-white px-4 py-1.5 rounded-lg border border-slate-200 shadow-sm"><span id="crit1Result">--</span> <span class="text-sm font-semibold text-slate-400">MPa</span></div>
-                            </div>
-                            <div class="h-px w-full bg-slate-200/60"></div>
-                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                                <div>
-                                    <span class="text-slate-700 font-semibold text-sm">Critère 2 (Valeur minimale majorée)</span>
-                                    <p class="text-xs text-slate-500 font-mono mt-0.5">f<sub>ck,is(2)</sub> = f<sub>is,lowest</sub> + M</p>
-                                </div>
-                                <div class="font-black text-lg text-slate-800 bg-white px-4 py-1.5 rounded-lg border border-slate-200 shadow-sm"><span id="crit2Result">--</span> <span class="text-sm font-semibold text-slate-400">MPa</span></div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Résultat Final 1 -->
-                            <div class="relative overflow-hidden border-2 border-emerald-500 rounded-2xl p-6 text-center bg-gradient-to-b from-white to-emerald-50/30 shadow-md transition-transform hover:-translate-y-1">
-                                <div class="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
-                                <h2 class="text-xs font-black uppercase tracking-widest text-emerald-700 mb-3">Résistance sur Site (F<sub>ck,is</sub>)</h2>
-                                <div class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight my-2">
-                                    <span id="finalResult">--</span> <span class="text-2xl text-emerald-600 ml-1">MPa</span>
-                                </div>
-                                <div class="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full mt-3">
-                                    Min(Critère 1, Critère 2)
-                                </div>
-                            </div>
-
-                            <!-- Résultat Final 2 -->
-                            <div class="relative overflow-hidden border-2 border-indigo-600 rounded-2xl p-6 text-center bg-gradient-to-b from-indigo-600 to-blue-700 shadow-lg transition-transform hover:-translate-y-1">
-                                <h2 class="text-xs font-black uppercase tracking-widest text-indigo-100 mb-3 opacity-90">Résistance de Calcul (F<sub>ck</sub>)</h2>
-                                <div class="text-4xl md:text-5xl font-black text-white tracking-tight my-2 drop-shadow-md">
-                                    <span id="finalResult2">--</span> <span class="text-2xl text-indigo-200 ml-1">MPa</span>
-                                </div>
-                                <div class="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full mt-3 border border-white/10">
-                                    f<sub>ck</sub> = f<sub>ck,is</sub> ÷ 0.85
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm font-medium text-slate-700"
+                  >Constante \( M \)
+                  <span class="text-xs text-slate-400 font-normal"
+                    >(Tab. 7)</span
+                  ></span
+                >
+                <div
+                  class="data-text font-bold text-slate-900 bg-white px-3 py-1 border border-slate-300 rounded-sm"
+                  id="mDisplay"
+                >
+                  --
                 </div>
-
-                <!-- Note informative -->
-                <div class="flex items-start space-x-4 p-5 bg-blue-50/80 text-blue-900 rounded-2xl text-sm border border-blue-100 shadow-sm">
-                    <div class="p-1.5 bg-blue-100 rounded-lg text-blue-600 flex-shrink-0 mt-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
-                    </div>
-                    <p class="leading-relaxed">
-                        <strong class="font-bold text-blue-800 block mb-1">Rappel Normatif :</strong> La version 2022 a introduit une limite stricte pour l'écart-type utilisé dans les calculs : il ne peut pas être inférieur à 8% de la moyenne (<code class="bg-blue-200/50 text-blue-800 px-1.5 py-0.5 rounded font-bold">s ≥ 0.08 × f<sub>m</sub></code>). L'approche de la valeur minimale (Critère 2) utilise désormais une constante <code class="bg-blue-200/50 text-blue-800 px-1.5 py-0.5 rounded font-bold">M</code> variable selon le niveau de résistance atteint (Tableau 7).
-                    </p>
-                </div>
-
+              </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Template invisible utilisé pour générer le PDF -->
-    <div style="position: absolute; left: -9999px; top: 0;">
-        <!-- Largeur ajustée à 600px pour une proportion idéale sur format A4 -->
-        
-        <div id="pdfTemplate" class="w-[700px] bg-white pt-[20px] px-10 pb-10 text-slate-900 font-sans">
-            <!-- Header -->
-
-            <div class="border-b-4 border-slate-900 pb-4 mb-6 flex justify-between items-end">
-                <div>
-                    <h1 class="text-2xl font-bold text-slate-900">Rapport d'Évaluation F<sub>ck</sub></h1>
-                    <p class="text-sm text-slate-900">Norme NA 17004:2022 </p>
-                </div>
-                <div class="text-right pb-1">
-                    <p class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1">Convention N°</p>
-                    <p class="text-sm font-mono font-bold text-slate-900" id="pdfConvention"></p>
-                </div>
-            </div>
-            
-            <div class="flex justify-between text-sm mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                <p><span class="font-semibold">Date :</span> <span id="pdfDate"></span></p>
-                <p><span class="font-semibold">Nombre de carottes (n) :</span> <span id="pdfN"></span></p>
-            </div>
-
-            <div class="mb-6">
-                <h2 class="text-sm font-bold border-b-1 border-slate-300 pb-1 mb-2">1. Données mesurées (MPa)</h2>
-                <!-- Grille dynamique pour les valeurs des carottes (8 colonnes) -->
-                <div id="pdfCoresGrid" class="grid grid-cols-8 gap-2 text-sm font-mono text-center"></div>
-            </div>
-
-            <div class="mb-6">
-                <h2 class="text-sm font-bold border-b-2 border-slate-300 pb-2 mb-4">2. Statistiques et Paramètres</h2>
-                <div class="grid grid-cols-2 gap-6 text-xs">
-                    <div class="space-y-2">
-                        <p><span class="font-semibold text-slate-900">Moyenne (f<sub>m,is</sub>) :</span> <span id="pdfFm"></span> MPa</p>
-                        <p><span class="font-semibold text-slate-900">Minimum (f<sub>is,lowest</sub>) :</span> <span id="pdfLowest"></span> MPa</p>
-                        <p><span class="font-semibold text-slate-900">Écart-type retenu (s) :</span> <span id="pdfS"></span> MPa</p>
-                    </div>
-                    <div class="space-y-2">
-                        <p><span class="font-semibold text-slate-900">Facteur (k<sub>n</sub>) :</span> <span id="pdfKn"></span></p>
-                        <p><span class="font-semibold text-slate-900">Constante (M) :</span> <span id="pdfM"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-sm font-bold border-b-2 border-slate-300 pb-2 mb-4">3. Critères d'évaluation</h2>
-                
-                <div class="bg-white p-4 rounded-lg border border-slate-200 text-xs space-y-2 mb-6 shadow-sm">
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-900">Critère 1 (Moyenne pénalisée) :</span>
-                        <span class="font-bold text-slate-900"><span id="pdfC1"></span> MPa</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-900">Critère 2 (Valeur minimale majorée) :</span>
-                        <span class="font-bold text-slate-900"><span id="pdfC2"></span> MPa</span>
-                    </div>
-                </div>
-
-               
-                <div class="flex gap-4">
-    <!-- Résultat Final 1 (PDF) -->
-    <div class="w-1/2 border border-slate-600 rounded-xl p-6 text-center bg-white shadow-sm">
-        <h2 class="text-sm font-bold uppercase tracking-widest text-slate-600 mb-2">
-            Résistance Caractéristique sur Site (F<sub>ck,is</sub>)
-        </h2>
-        <div class="text-2xl font-extrabold text-slate-900">
-            <span id="pdfFinal"></span> <span class="text-2xl font-bold">MPa</span>
-        </div>
-        <p class="text-xs text-slate-500 mt-3">
-            Valeur retenue : Minimum(Critère 1, Critère 2)
-        </p>
-    </div>
-
-    <!-- Résultat Final 2 (PDF) -->
-    <div class="w-1/2 border border-blue-600 rounded-xl p-6 text-center bg-blue-50 shadow-sm">
-        <h2 class="text-sm font-bold uppercase tracking-widest text-blue-800 mb-2">
-            Résistance Caractéristique de Calcul (F<sub>ck</sub>)
-        </h2>
-        <div class="text-2xl font-extrabold text-blue-900">
-            <span id="pdfFinal2"></span> <span class="text-2xl font-bold">MPa</span>
-        </div>
-        <p class="text-xs text-blue-600 mt-3">
-            f<sub>ck</sub> = f<sub>ck,is</sub> / 0,85
-        </p>
-    </div>
-
-    
-</div>
-
-            </div>
-
+          </div>
         </div>
 
+        <!-- STREAMING_CHUNK: Right Column: Mathematical Output & Results -->
+        <div class="lg:col-span-8 space-y-6">
+          <!-- Error State -->
+          <div
+            id="errorContainer"
+            class="hidden sci-card bg-red-50 border-red-200 p-6"
+          >
+            <h3 class="text-lg font-bold text-red-800 math-text mb-2">
+              Condition non vérifiée
+            </h3>
+            <p class="text-red-700 text-sm">
+              L'évaluation nécessite au minimum 3 prélèvements (\( n \ge 3 \)).
+            </p>
+          </div>
+
+          <!-- Results Container -->
+          <div id="resultsContainer" class="space-y-6">
+            <!-- Statistical Analysis -->
+            <div class="sci-card p-6 md:p-8">
+              <h2
+                class="text-xl font-bold text-slate-800 math-text mb-5 border-b border-slate-200 pb-2"
+              >
+                3. Analyse Statistique
+              </h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                <!-- Moyenne -->
+                <div
+                  class="flex justify-between items-end border-b border-slate-100 pb-2"
+                >
+                  <div>
+                    <div
+                      class="text-xs text-slate-500 uppercase tracking-wide mb-1"
+                    >
+                      Moyenne
+                    </div>
+                    <div class="text-lg">\( f_{m,is} \)</div>
+                  </div>
+                  <div class="text-right">
+                    <span
+                      class="text-2xl font-bold data-text text-slate-900"
+                      id="valFm"
+                      >--</span
+                    >
+                    <span class="text-sm font-medium text-slate-500 ml-1"
+                      >MPa</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Minimum -->
+                <div
+                  class="flex justify-between items-end border-b border-slate-100 pb-2"
+                >
+                  <div>
+                    <div
+                      class="text-xs text-slate-500 uppercase tracking-wide mb-1"
+                    >
+                      Valeur minimale
+                    </div>
+                    <div class="text-lg">\( f_{is,lowest} \)</div>
+                  </div>
+                  <div class="text-right">
+                    <span
+                      class="text-2xl font-bold data-text text-slate-900"
+                      id="valLowest"
+                      >--</span
+                    >
+                    <span class="text-sm font-medium text-slate-500 ml-1"
+                      >MPa</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Ecart type calculé -->
+                <div
+                  class="flex justify-between items-end border-b border-slate-100 pb-2"
+                >
+                  <div>
+                    <div
+                      class="text-xs text-slate-500 uppercase tracking-wide mb-1"
+                    >
+                      Écart-type calculé
+                    </div>
+                    <div class="text-lg">\( s_{calc} \)</div>
+                  </div>
+                  <div class="text-right">
+                    <span
+                      class="text-xl font-medium data-text text-slate-600"
+                      id="valScalc"
+                      >--</span
+                    >
+                    <span class="text-xs font-medium text-slate-400 ml-1"
+                      >MPa</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Ecart type retenu -->
+                <div
+                  class="flex justify-between items-end border-b border-slate-100 pb-2 bg-slate-50 px-3 -mx-3 rounded-sm"
+                >
+                  <div>
+                    <div
+                      class="text-xs text-slate-900 font-bold uppercase tracking-wide mb-1"
+                    >
+                      Écart-type retenu (\( s \))
+                    </div>
+                    <div class="text-xs text-slate-500">
+                      \( \max(s_{calc}, 0.08 f_{m,is}) \)
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span
+                      class="text-2xl font-bold data-text text-slate-900"
+                      id="valSretained"
+                      >--</span
+                    >
+                    <span class="text-sm font-medium text-slate-500 ml-1"
+                      >MPa</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Final Assessment -->
+            <div class="sci-card p-6 md:p-8 border-l-4 border-l-slate-800">
+              <h2
+                class="text-xl font-bold text-slate-800 math-text mb-5 border-b border-slate-200 pb-2"
+              >
+                4. Critères d'Évaluation
+              </h2>
+
+              <!-- Formules -->
+              <div class="space-y-4 mb-8">
+                <div
+                  class="flex flex-col sm:flex-row justify-between sm:items-center bg-slate-50 p-4 rounded-sm border border-slate-200"
+                >
+                  <div>
+                    <div class="text-sm font-bold text-slate-700 mb-1">
+                      Approche A (Moyenne)
+                    </div>
+                    <div>\( f_{ck,is(1)} = f_{m,is} - (k_n \times s) \)</div>
+                  </div>
+                  <div class="mt-2 sm:mt-0 text-right">
+                    <span
+                      class="text-xl font-bold data-text text-slate-900"
+                      id="crit1Result"
+                      >--</span
+                    >
+                    <span class="text-sm text-slate-500 ml-1">MPa</span>
+                  </div>
+                </div>
+
+                <div
+                  class="flex flex-col sm:flex-row justify-between sm:items-center bg-slate-50 p-4 rounded-sm border border-slate-200"
+                >
+                  <div>
+                    <div class="text-sm font-bold text-slate-700 mb-1">
+                      Approche B (Minimum)
+                    </div>
+                    <div>\( f_{ck,is(2)} = f_{is,lowest} + M \)</div>
+                  </div>
+                  <div class="mt-2 sm:mt-0 text-right">
+                    <span
+                      class="text-xl font-bold data-text text-slate-900"
+                      id="crit2Result"
+                      >--</span
+                    >
+                    <span class="text-sm text-slate-500 ml-1">MPa</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STREAMING_CHUNK: Final Conclusion Blocks -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Fck,is -->
+                <div
+                  class="border border-slate-300 p-5 rounded-sm bg-white text-center flex flex-col justify-center"
+                >
+                  <div
+                    class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2"
+                  >
+                    Résistance sur Site
+                  </div>
+                  <div class="mb-2">\( f_{ck,is} = \min(A, B) \)</div>
+                  <div class="mt-2">
+                    <span
+                      class="text-4xl font-extrabold data-text text-slate-900"
+                      id="finalResult"
+                      >--</span
+                    >
+                    <span class="text-lg text-slate-500 ml-1">MPa</span>
+                  </div>
+                </div>
+
+                <!-- Fck -->
+                <div
+                  class="border border-slate-800 p-5 rounded-sm bg-slate-900 text-center flex flex-col justify-center shadow-md"
+                >
+                  <div
+                    class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2"
+                  >
+                    Résistance de Calcul
+                  </div>
+                  <div class="mb-2 text-slate-300">
+                    \( f_{ck} = f_{ck,is} / 0.85 \)
+                  </div>
+                  <div class="mt-2">
+                    <span
+                      class="text-4xl font-extrabold data-text text-white"
+                      id="finalResult2"
+                      >--</span
+                    >
+                    <span class="text-lg text-slate-400 ml-1">MPa</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- STREAMING_CHUNK: PDF Template (Hidden) - Styled like an Academic Paper -->
+    <div style="position: absolute; left: -9999px; top: 0">
+      <div
+        id="pdfTemplate"
+        class="w-[750px] bg-white text-slate-900 pt-[25px] px-[40px] pb-4"
+        style="background-color: white; overflow: hidden"
+      >
+        <!-- PDF Header -->
+        <div class="border-b-2 border-slate-900 pb-4 mb-8 text-center relative">
+          <div class="absolute left-0 bottom-4 text-left">
+            <p
+              class="text-[10px] uppercase tracking-widest font-bold text-slate-500"
+            >
+              Réf. Convention
+            </p>
+            <p class="text-sm data-text font-bold" id="pdfConvention"></p>
+          </div>
+          <h1 class="text-2xl font-bold uppercase tracking-wide math-text">
+            Rapport d'Évaluation Statistique
+          </h1>
+          <p class="text-md math-text mt-1 text-slate-700">
+            Détermination de la résistance caractéristique selon NA 17004:2022
+          </p>
+          <div class="absolute right-0 bottom-4 text-right">
+            <p
+              class="text-[10px] uppercase tracking-widest font-bold text-slate-500"
+            >
+              Date
+            </p>
+            <p class="text-sm data-text" id="pdfDate"></p>
+          </div>
+        </div>
 
-        <script>
-        // Mettre à jour les calculs à chaque changement
-        function calculate() {
-            const dataText = document.getElementById('dataInput').value;
+        <!-- PDF Data Table -->
+        <div class="mb-8">
+          <h2
+            class="text-lg font-bold math-text border-b border-slate-300 pb-1 mb-3"
+          >
+            1. Données d'échantillonnage (\( n = \) <span id="pdfN"></span>)
+          </h2>
+          <div class="bg-slate-50 border border-slate-200 p-4 rounded-sm">
+            <div
+              id="pdfCoresGrid"
+              class="flex flex-wrap gap-3 data-text text-sm"
+            >
+              <!-- Filled by JS -->
+            </div>
+          </div>
+        </div>
 
-            // 1. Extraire les nombres du champ texte
-            const lines = dataText.split('\n');
-            const cores = [];
-            for (const line of lines) {
-                const cleanLine = line.trim().replace(',', '.');
-                if (cleanLine !== '') {
-                    const num = parseFloat(cleanLine);
-                    if (!isNaN(num)) {
-                        cores.push(num);
-                    }
-                }
+        <!-- PDF Stats & Params -->
+        <div class="grid grid-cols-2 gap-8 mb-8">
+          <div>
+            <h2
+              class="text-lg font-bold math-text border-b border-slate-300 pb-1 mb-3"
+            >
+              2. Statistiques
+            </h2>
+            <table class="w-full text-sm">
+              <tr class="pdf-table-row">
+                <td class="py-2">Moyenne (\( f_{m,is} \))</td>
+                <td class="py-2 text-right data-text font-bold">
+                  <span id="pdfFm"></span> MPa
+                </td>
+              </tr>
+              <tr class="pdf-table-row">
+                <td class="py-2">Minimum (\( f_{is,lowest} \))</td>
+                <td class="py-2 text-right data-text font-bold">
+                  <span id="pdfLowest"></span> MPa
+                </td>
+              </tr>
+              <tr class="pdf-table-row">
+                <td class="py-2">Écart-type calculé (\( s_{calc} \))</td>
+                <td class="py-2 text-right data-text">
+                  <span id="pdfScalc"></span> MPa
+                </td>
+              </tr>
+              <tr class="pdf-table-row bg-slate-50">
+                <td class="py-2 px-2 font-semibold">
+                  Écart-type retenu (\( s \))
+                </td>
+                <td class="py-2 px-2 text-right data-text font-bold">
+                  <span id="pdfS"></span> MPa
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <h2
+              class="text-lg font-bold math-text border-b border-slate-300 pb-1 mb-3"
+            >
+              3. Paramètres
+            </h2>
+            <table class="w-full text-sm">
+              <tr class="pdf-table-row">
+                <td class="py-2">Facteur de couverture (\( k_n \))</td>
+                <td class="py-2 text-right data-text font-bold" id="pdfKn"></td>
+              </tr>
+              <tr class="pdf-table-row">
+                <td class="py-2">Constante (\( M \))</td>
+                <td class="py-2 text-right data-text font-bold" id="pdfM"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- PDF Criteria & Conclusion -->
+        <div>
+          <h2
+            class="text-lg font-bold math-text border-b border-slate-300 pb-1 mb-4"
+          >
+            4. Synthèse et Conclusion
+          </h2>
+
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="border border-slate-200 p-4">
+              <div class="text-xs text-slate-500 uppercase mb-2">
+                Approche A
+              </div>
+              <div class="text-sm mb-2">
+                \( f_{ck,is(1)} = f_{m,is} - k_n s \)
+              </div>
+              <div class="data-text font-bold text-lg text-right">
+                <span id="pdfC1"></span> MPa
+              </div>
+            </div>
+            <div class="border border-slate-200 p-4">
+              <div class="text-xs text-slate-500 uppercase mb-2">
+                Approche B
+              </div>
+              <div class="text-sm mb-2">
+                \( f_{ck,is(2)} = f_{is,lowest} + M \)
+              </div>
+              <div class="data-text font-bold text-lg text-right">
+                <span id="pdfC2"></span> MPa
+              </div>
+            </div>
+          </div>
+
+          <div class="flex border-2 border-slate-800">
+            <div
+              class="w-1/2 p-4 border-r-2 border-slate-800 bg-slate-50 text-center"
+            >
+              <div
+                class="text-xs font-bold uppercase tracking-widest text-slate-600 mb-3"
+              >
+                Résistance sur Site
+              </div>
+              <div class="text-lg mb-3">\( f_{ck,is} = \min(A, B) \)</div>
+              <div class="text-xl font-extrabold data-text text-slate-900">
+                <span id="pdfFinal"></span> <span class="text-sm">MPa</span>
+              </div>
+            </div>
+            <div class="w-1/2 p-4 bg-white text-black text-center">
+              <div
+                class="text-xs font-bold uppercase tracking-widest text-black mb-3"
+              >
+                Résistance de Calcul
+              </div>
+
+              <div class="text-lg mb-3 text-black">
+                \( f_{ck} = f_{ck,is} / 0.85 \)
+              </div>
+
+              <div class="text-xl font-extrabold data-text text-black">
+                <span id="pdfFinal2"></span>
+                <span class="text-sm text-black">MPa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+          class="mt-12 pt-4 border-t border-slate-300 text-[10px] text-center text-slate-500 uppercase tracking-widest"
+        >
+          Généré par Application d'Évaluation Fck - Ing. Chargé d'affaire
+        </div>
+      </div>
+    </div>
+
+    <!-- STREAMING_CHUNK: JavaScript Logic -->
+    <script>
+      // Render KaTeX Math initially
+      document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "\\(", right: "\\)", display: false },
+          ],
+          throwOnError: false,
+        });
+        calculate(); // Initial calculation
+      });
+
+      function calculate() {
+        const dataText = document.getElementById("dataInput").value;
+
+        // Parsing the input data
+        const lines = dataText.split("\n");
+        const cores = [];
+        for (const line of lines) {
+          const cleanLine = line.trim().replace(",", ".");
+          if (cleanLine !== "") {
+            const num = parseFloat(cleanLine);
+            if (!isNaN(num)) {
+              cores.push(num);
             }
-
-            const n = cores.length;
-            document.getElementById('nCount').textContent = n;
-
-            const resultsContainer = document.getElementById('resultsContainer');
-            const errorContainer = document.getElementById('errorContainer');
-            const badgeCount = document.getElementById('badgeCount');
-            const pdfBtn = document.getElementById('pdfBtn');
-
-            // 2. Vérifier si on a au moins 3 valeurs
-            if (n < 3) {
-                resultsContainer.classList.add('hidden');
-                errorContainer.classList.remove('hidden');
-                badgeCount.className = 'px-2 py-1 rounded-md bg-red-100 text-red-700';
-                pdfBtn.disabled = true;
-                pdfBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                return;
-            }
-
-            // Afficher les résultats
-            resultsContainer.classList.remove('hidden');
-            errorContainer.classList.add('hidden');
-            badgeCount.className = 'px-2 py-1 rounded-md bg-emerald-100 text-emerald-700';
-            pdfBtn.disabled = false;
-            pdfBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-            // 3. Calculs Statistiques
-            const fm = cores.reduce((a, b) => a + b, 0) / n;
-            const f_lowest = Math.min(...cores);
-
-            let variance = 0;
-            for (const val of cores) {
-                variance += Math.pow(val - fm, 2);
-            }
-            variance = variance / (n - 1);
-            const s_calc = Math.sqrt(variance);
-
-            const s_min = 0.08 * fm;
-            const s_retained = Math.max(s_calc, s_min);
-
-            // 4. Règles normatives M et kn (Tableaux 6 et 7)
-            let kn = 2.00;
-            if (n <= 8) kn = 2.00;
-            else if (n <= 10) kn = 2.00 - (n - 8) * ((2.00 - 1.92) / 2);
-            else if (n <= 12) kn = 1.92 - (n - 10) * ((1.92 - 1.87) / 2);
-            else if (n <= 16) kn = 1.87 - (n - 12) * ((1.87 - 1.81) / 4);
-            else if (n <= 20) kn = 1.81 - (n - 16) * ((1.81 - 1.76) / 4);
-            else if (n <= 30) kn = 1.76 - (n - 20) * ((1.76 - 1.73) / 10);
-            else kn = 1.64; // Pour n > 30 (infini)
-            
-            kn = Math.round(kn * 100) / 100;
-
-            let M = 1;
-            let mConditionHtml = "";
-            if (f_lowest >= 20) { 
-                M = 4; 
-                mConditionHtml = `(f<sub>is,lowest</sub> &ge; 20 MPa)`; 
-            }
-            else if (f_lowest >= 16) { 
-                M = 3; 
-                mConditionHtml = `(16 &le; f<sub>is,lowest</sub> &lt; 20 MPa)`; 
-            }
-            else if (f_lowest >= 12) { 
-                M = 2; 
-                mConditionHtml = `(12 &le; f<sub>is,lowest</sub> &lt; 16 MPa)`; 
-            }
-            else { 
-                M = 1; 
-                mConditionHtml = `(f<sub>is,lowest</sub> &lt; 12 MPa)`; 
-            }
-
-            // 5. Critères de Résistance
-            const fck_is_1 = fm - kn * s_retained;
-            const fck_is_2 = f_lowest + M;
-            const fck_is = Math.min(fck_is_1, fck_is_2);
-
-            // 6. Nouveau calcul pour la résistance de calcul (fck)
-            const fck = fck_is / 0.85;
-
-            // 7. Mise à jour de l'interface
-            document.getElementById('valFm').textContent = fm.toFixed(2);
-            document.getElementById('valLowest').textContent = f_lowest.toFixed(2);
-            document.getElementById('valScalc').textContent = s_calc.toFixed(3);
-            document.getElementById('valSretained').textContent = s_retained.toFixed(3);
-
-            document.getElementById('knDisplay').innerHTML = `${kn.toFixed(2)} <span class="text-slate-500 text-sm font-normal ml-1">(n = ${n})</span>`;
-            document.getElementById('mDisplay').innerHTML = `${M} <span class="text-slate-500 text-sm font-normal ml-1">${mConditionHtml}</span>`;
-
-            document.getElementById('crit1Result').textContent = fck_is_1.toFixed(2);
-            document.getElementById('crit2Result').textContent = fck_is_2.toFixed(2);
-
-            document.getElementById('finalResult').textContent = fck_is.toFixed(2);
-            document.getElementById('finalResult2').textContent = fck.toFixed(2);
+          }
         }
 
-        // Fonction pour générer le PDF
-        function generatePDF() {
-            // Modification du bouton pour indiquer le chargement
-            const btn = document.getElementById('pdfBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Génération...`;
-            
-            // 1. Remplir le template PDF avec les données actuelles
-            const dateStr = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            document.getElementById('pdfDate').textContent = dateStr;
-            document.getElementById('pdfN').textContent = document.getElementById('nCount').textContent;
-            document.getElementById('pdfConvention').textContent = document.getElementById('conventionInput').value || 'Non renseigné';
-            
-            // Récupération des données brutes
-            const dataText = document.getElementById('dataInput').value;
-            const cores = dataText.split('\n')
-                                  .map(l => l.trim().replace(',', '.'))
-                                  .filter(l => l !== '' && !isNaN(parseFloat(l)))
-                                  .map(l => parseFloat(l).toFixed(2));
-            
-            // Remplir la grille
-            const grid = document.getElementById('pdfCoresGrid');
-            grid.innerHTML = '';
-            cores.forEach(val => {
-                const div = document.createElement('div');
-                div.className = "bg-slate-100 p-2 rounded-lg border border-slate-200";
-                div.textContent = val;
-                grid.appendChild(div);
-            });
+        const n = cores.length;
+        document.getElementById("nCount").textContent = n;
 
-            // Remplir les paramètres et résultats
-            document.getElementById('pdfFm').textContent = document.getElementById('valFm').textContent;
-            document.getElementById('pdfLowest').textContent = document.getElementById('valLowest').textContent;
-            document.getElementById('pdfS').textContent = document.getElementById('valSretained').textContent;
-            
-            document.getElementById('pdfKn').innerHTML = document.getElementById('knDisplay').innerHTML;
-            document.getElementById('pdfM').innerHTML = document.getElementById('mDisplay').innerHTML;
+        // UI Elements
+        const resultsContainer = document.getElementById("resultsContainer");
+        const errorContainer = document.getElementById("errorContainer");
+        const pdfBtn = document.getElementById("pdfBtn");
+        const badgeCount = document.getElementById("badgeCount");
 
-            document.getElementById('pdfC1').textContent = document.getElementById('crit1Result').textContent;
-            document.getElementById('pdfC2').textContent = document.getElementById('crit2Result').textContent;
-            
-            document.getElementById('pdfFinal').textContent = document.getElementById('finalResult').textContent;
-            document.getElementById('pdfFinal2').textContent = document.getElementById('finalResult2').textContent;
-
-            // 2. Configuration html2pdf
-           let conventionInput = document.getElementById("conventionInput").value;
-conventionInput = conventionInput.replace(/[^\w\-]/g, "");
-            const element = document.getElementById('pdfTemplate');
-            
-            const opt = {
-                margin:       10, // marges en mm
-                filename:     `Fck_Rapport_${conventionInput}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Format A4
-            };
-
-            // 3. Lancer la génération
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Restaurer le bouton
-                btn.innerHTML = originalText;
-            });
+        if (n < 3) {
+          resultsContainer.classList.add("hidden");
+          errorContainer.classList.remove("hidden");
+          badgeCount.className =
+            "px-2 py-0.5 rounded-sm bg-red-800 text-white data-text font-bold text-sm";
+          pdfBtn.disabled = true;
+          pdfBtn.classList.add("opacity-50", "cursor-not-allowed");
+          return;
         }
 
-        // Ajouter les écouteurs d'événements pour rendre l'interface réactive
-        document.getElementById('dataInput').addEventListener('input', calculate);
+        resultsContainer.classList.remove("hidden");
+        errorContainer.classList.add("hidden");
+        badgeCount.className =
+          "px-2 py-0.5 rounded-sm bg-slate-800 text-white data-text font-bold text-sm";
+        pdfBtn.disabled = false;
+        pdfBtn.classList.remove("opacity-50", "cursor-not-allowed");
 
-        // Lancer le calcul initial au chargement de la page
-        document.addEventListener('DOMContentLoaded', calculate);
+        // Statistics Math
+        const fm = cores.reduce((a, b) => a + b, 0) / n;
+        const f_lowest = Math.min(...cores);
+
+        let variance = 0;
+        for (const val of cores) {
+          variance += Math.pow(val - fm, 2);
+        }
+        variance = variance / (n - 1);
+        const s_calc = Math.sqrt(variance);
+
+        const s_min = 0.08 * fm;
+        const s_retained = Math.max(s_calc, s_min);
+
+        // Kn Factor Table Lookup
+        let kn = 2.0;
+        if (n <= 8) kn = 2.0;
+        else if (n <= 10) kn = 2.0 - (n - 8) * ((2.0 - 1.92) / 2);
+        else if (n <= 12) kn = 1.92 - (n - 10) * ((1.92 - 1.87) / 2);
+        else if (n <= 16) kn = 1.87 - (n - 12) * ((1.87 - 1.81) / 4);
+        else if (n <= 20) kn = 1.81 - (n - 16) * ((1.81 - 1.76) / 4);
+        else if (n <= 30) kn = 1.76 - (n - 20) * ((1.76 - 1.73) / 10);
+        else kn = 1.64;
+
+        kn = Math.round(kn * 100) / 100;
+
+        // M Constant Lookup
+        let M = 1;
+        if (f_lowest >= 20) M = 4;
+        else if (f_lowest >= 16) M = 3;
+        else if (f_lowest >= 12) M = 2;
+        else M = 1;
+
+        // Core Criteria Calculation
+        const fck_is_1 = fm - kn * s_retained;
+        const fck_is_2 = f_lowest + M;
+        const fck_is = Math.min(fck_is_1, fck_is_2);
+        const fck = fck_is / 0.85;
+
+        // Update UI DOM
+        document.getElementById("valFm").textContent = fm.toFixed(2);
+        document.getElementById("valLowest").textContent = f_lowest.toFixed(2);
+        document.getElementById("valScalc").textContent = s_calc.toFixed(3);
+        document.getElementById("valSretained").textContent =
+          s_retained.toFixed(3);
+
+        document.getElementById("knDisplay").textContent = kn.toFixed(2);
+        document.getElementById("mDisplay").textContent = M;
+
+        document.getElementById("crit1Result").textContent =
+          fck_is_1.toFixed(2);
+        document.getElementById("crit2Result").textContent =
+          fck_is_2.toFixed(2);
+        document.getElementById("finalResult").textContent = fck_is.toFixed(2);
+        document.getElementById("finalResult2").textContent = fck.toFixed(2);
+      }
+
+      // STREAMING_CHUNK: PDF Generation Logic
+      function generatePDF() {
+        const btn = document.getElementById("pdfBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<svg class="animate-spin h-5 w-5 mr-2 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Génération...`;
+
+        // Populating PDF Template Data
+        const dateStr = new Date().toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        document.getElementById("pdfDate").textContent = dateStr;
+        document.getElementById("pdfN").textContent =
+          document.getElementById("nCount").textContent;
+        document.getElementById("pdfConvention").textContent =
+          document.getElementById("conventionInput").value || "N/A";
+
+        // Populate grid with nice format
+        const dataText = document.getElementById("dataInput").value;
+        const cores = dataText
+          .split("\n")
+          .map((l) => l.trim().replace(",", "."))
+          .filter((l) => l !== "" && !isNaN(parseFloat(l)))
+          .map((l) => parseFloat(l).toFixed(2));
+
+        const grid = document.getElementById("pdfCoresGrid");
+        grid.innerHTML = "";
+        cores.forEach((val, idx) => {
+          const div = document.createElement("div");
+          div.className =
+            "px-2 py-1 bg-white border border-slate-300 rounded-sm";
+          div.innerHTML = `<span class="text-slate-400 text-xs mr-1">#${idx + 1}</span> ${val}`;
+          grid.appendChild(div);
+        });
+
+        // Map variables
+        const mapIds = [
+          ["valFm", "pdfFm"],
+          ["valLowest", "pdfLowest"],
+          ["valScalc", "pdfScalc"],
+          ["valSretained", "pdfS"],
+          ["knDisplay", "pdfKn"],
+          ["mDisplay", "pdfM"],
+          ["crit1Result", "pdfC1"],
+          ["crit2Result", "pdfC2"],
+          ["finalResult", "pdfFinal"],
+          ["finalResult2", "pdfFinal2"],
+        ];
+
+        mapIds.forEach((pair) => {
+          document.getElementById(pair[1]).textContent =
+            document.getElementById(pair[0]).textContent;
+        });
+
+        // PDF Options tailored for A4 Math Paper
+        let conventionInput =
+          document
+            .getElementById("conventionInput")
+            .value.replace(/[^\w\-]/g, "") || "Rapport";
+        const element = document.getElementById("pdfTemplate");
+
+        const opt = {
+          margin: [15, 10, 15, 10], // Top, Left, Bottom, Right
+          filename: `Rapport_Fck_${conventionInput}.pdf`,
+          image: { type: "jpeg", quality: 1 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+
+        // Generate
+        html2pdf()
+          .set(opt)
+          .from(element)
+          .save()
+          .then(() => {
+            btn.innerHTML = originalText;
+          });
+      }
+
+      document.getElementById("dataInput").addEventListener("input", calculate);
     </script>
-</body>
+  </body>
 </html>
+```eof
